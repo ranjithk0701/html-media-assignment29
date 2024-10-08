@@ -1,0 +1,44 @@
+2->
+class Solution {
+public:
+    int pivotIndex(vector<int>& nums) {
+        int n = nums.size();
+        for(int i = 0; i < n; i++){
+            int x = 0;
+            int y = 0;
+            for(int j = i-1; j >= 0; j--){
+                x += nums[j];
+            }
+            for(int k = i+1; k < n; k++){
+                y += nums[k];
+            }
+            if(x == y) return i;
+        }
+        return -1;
+    }
+};
+
+3->
+class Solution {
+public:
+    vector<long long> findPrefixScore(vector<int>& nums) {
+        int n = nums.size();
+        vector<long long> v(n);
+        long long x = 0;
+        int maxi = INT_MIN;
+        for(int i = 0; i < n; i++){
+            x += nums[i];
+            for(int j = 0; j <= i; j++){
+                if(nums[j] > maxi) maxi = nums[j];
+            }
+            x += maxi;
+            v[i] = x;
+            x = 0;
+            maxi = INT_MIN;
+        }
+        for(int i = 1; i < n; i++){
+            v[i] += v[i-1];
+        }
+        return v;
+    }
+};
